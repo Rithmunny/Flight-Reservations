@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="flightApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Reservations</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #428bca;
+    }
+
+    .flight-container {
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 10px;
+      background-color: #fff;
+    }
+
+    .reserved {
+      background-color: #d9534f;
+      color: #fff;
+    }
+  </style>
+</head>
+<body ng-controller="FlightController">
+  <h1>Flight Reservations</h1>
+
+  <div ng-if="flights.length === 0">
+    <p>No flights available.</p>
+  </div>
+
+  <div class="flight-container" ng-repeat="flight in flights">
+    <div ng-switch on="flight.status">
+      <div ng-switch-when="available">
+        <h3>{{ flight.name }}</h3>
+        <p>Departure: {{ flight.departure }}</p>
+        <p>Destination: {{ flight.destination }}</p>
+        <p>Price: {{ flight.price | currency }}</p>
+        <button ng-click="reserveFlight(flight)">Reserve</button>
+      </div>
+      <div ng-switch-when="reserved" class="reserved">
+        <h3>{{ flight.name }} - Reserved</h3>
+        <p>Departure: {{ flight.departure }}</p>
+        <p>Destination: {{ flight.destination }}</p>
+        <p>Price: {{ flight.price | currency }}</p>
+        <p>Your reservation is confirmed.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
